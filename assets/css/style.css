@@ -1,0 +1,100 @@
+body {
+  background-color: #2b333b;
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+}
+
+h1 {
+  font-size: 36px;
+  text-decoration: underline;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 16px;
+  padding: 2rem 1rem;
+}
+
+li {
+  font-size: 16px;
+  padding: 1rem;
+}
+
+li:hover {
+  cursor: pointer;
+  font-weight: bolder;
+  color: darkorange;
+}
+
+.wrapper {
+  display: flex; 
+  width: 100%; /* full width for small screens < 576px. See media query for medium and large screens*/
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-row {
+  display: none; /* use javascript to change to display flex when start button is pressed */
+  width: 100%;
+  justify-content: space-between;
+}
+
+#score {
+  padding-left: 1rem;
+}
+
+#timer {
+  padding-right: 1rem;
+}
+
+.content {
+    text-align: center;
+
+}
+
+.choice-content {
+    text-align: left;
+}
+
+#start-btn {
+  background-color: transparent;
+  color: #fff;
+  font-size: 24px;
+  border: 2px solid white;
+  padding: 8px;
+  border-radius: 15%/50%;
+}
+
+#start-btn:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+#start-btn:active {
+  transform: scale(1) ;
+}
+
+@media (min-width: 768px) {
+
+  /* center wrapper on medium screens */
+  .wrapper { 
+    margin-left: auto;
+    width: 75%;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  /* center wrapper on large screens with wider margins */
+  .wrapper { 
+    margin-left: auto;
+    width: 60%;
+    margin-right: auto;
+  }
+}
+
+
