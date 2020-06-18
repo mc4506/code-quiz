@@ -9,16 +9,16 @@ var scoreID = document.getElementById("score");
 var userScore = 0; // initialize score
 
 var questionsDiv = document.querySelector(".content");
-var choicesUL = document.getElementById("multiple-choices");
+var choicesForm = document.querySelector(".multiple-choices");
 
 // Function call to start quiz
 startBtn.addEventListener("click", startQuiz);
 
 // FUNCTION TO START QUIZ
 function startQuiz() {
-  scoreRow.style.display = 'flex'; // Unhide score-row container
-  startBtn.style.display = 'none'; // hide start button
-  showQuestions();
+  scoreRow.style.display = "flex"; // Unhide score-row container
+  startBtn.style.display = "none"; // hide start button
+  showQuestionsAndChoices();
   countdown();
 }
 
@@ -37,21 +37,30 @@ function countdown() {
   }, 1000);
 }
 
-// FUNCTION TO CHANGE CONTENT
-function showQuestions() {
-  // console.log(content.children[0]);
-  // console.log(questionsList[0].question);
+// FUNCTION TO CHANGE CONTENT div and MULTIPLE CHOICES form
+function showQuestionsAndChoices() {
   let i = 0;
   questionsDiv.style.textAlign = 'left';
   questionsDiv.textContent = `Question ${i + 1}: ${questionsList[i].question}`;
   
 
   for (let j = 0; j < questionsList[i].choices.length; j++) {
-    // create a list element for each choice available
-    let liElement = document.createElement("li");
-    choicesUL.appendChild(liElement);
+    // create input element and label element for each choice available and append to form tag
+    let inputElement = document.createElement("input");
+    let labelElement = document.createElement("label");
+    choicesForm.appendChild(inputElement);
+    choicesForm.appendChild(labelElement);
     
-    let abcd = 'ABCD' 
-    choicesUL.children[j].textContent = abcd[j] + ": " + questionsList[i].choices[j];
+    // use radio input type. Hide the radio buttons.
+    inputElement.type = "radio";
+    inputElement.name = "answer";
+    inputElement.value = j;
+    inputElement.id = j;
+    inputElement.style.display = "none";
+
+    // display each multiple choice selection using the label element
+    let abcd = "ABCD"; 
+    labelElement.htmlFor = j;
+    labelElement.textContent = abcd[j] + ": " + questionsList[i].choices[j];
   }
 }
