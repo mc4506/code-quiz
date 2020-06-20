@@ -5,17 +5,23 @@ body {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 28px;
   text-decoration: underline;
+  margin-left: 16px;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 p {
   font-size: 16px;
-  padding: 2rem 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+input {
+  display: none;
 }
 
 label {
@@ -34,13 +40,15 @@ label:hover {
   display: flex; 
   width: 100%; /* full width for small screens < 576px. See media query for medium and large screens*/
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .score-row {
   display: none; /* use javascript to change to display flex when start button is pressed */
   width: 100%;
   justify-content: space-between;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 #score {
@@ -52,16 +60,21 @@ label:hover {
 }
 
 .content {
-    text-align: center;
+    text-align: left;
+    margin-left: 16px;
+}
 
+.multiple-choices{
+  width: 100%;
 }
 
 #start-btn {
   background-color: transparent;
   color: #fff;
-  font-size: 24px;
+  font-size: 16px;
   border: 2px solid white;
   padding: 8px;
+  margin-left: 16px;
   border-radius: 15%/50%;
 }
 
@@ -76,11 +89,25 @@ label:hover {
 
 @media (min-width: 768px) {
 
+  h1 {
+    font-size: 36px;
+  }
+
   /* center wrapper on medium screens */
   .wrapper { 
+    align-items: center;
+
     margin-left: auto;
     width: 75%;
     margin-right: auto;
+  }
+
+  .content {
+    text-align: center;
+  }
+
+  #start-btn {
+    font-size: 24px;
   }
 }
 
