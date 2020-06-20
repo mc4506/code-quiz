@@ -12,6 +12,7 @@ var userScore = 0; // initialize score
 var answeredCorrectly = 0; // initialize number of correctly answered questions
 
 var contentDiv = document.querySelector(".content");
+var questionDiv = document.getElementById("question-content");
 var multipleChoiceUL = document.getElementById("multiple-choices");
 
 var questionNumber = 0;
@@ -23,6 +24,7 @@ startBtn.addEventListener("click", startQuiz);
 function startQuiz() {
   scoreRow.style.display = "flex"; // Unhide score-row container
   startBtn.style.display = "none"; // hide start button
+  contentDiv.style.display = "none";
 
   countdown();
 
@@ -31,13 +33,14 @@ function startQuiz() {
   userSelection();
 
   // display remaining questions after Next button is clicked
-  nextBtn.addEventListener("click", function() {
-      clearList();
+  nextBtn.addEventListener("click", function () {
+    questionNumber++;
+    clearList();
     if (questionNumber < questionsList.length) {
-      questionNumber++;
       displayQuestion();
       userSelection();
-    } else {
+    }else {
+      console.log("qNumber3:" + questionNumber);
       displayUserScore();
     }
   });
@@ -53,11 +56,23 @@ function countdown() {
       clearInterval(timerIntertval);
       quizTimeLimit = 0;
       clearList();
-      displayUserScore();
+      displayTimesUp();
+      setTimeout(displayUserScore, 1000);
+      return;
     }
-    timerID.textContent = "Timer: " + quizTimeLimit + "s";
     quizTimeLimit -= 1;
+    timerID.textContent = "Timer: " + quizTimeLimit + "s";
   }, 1000);
+}
+
+// FUNCTION TO DISPLAY TIME'S UP
+function displayTimesUp() {
+  buttonRow.style.display = "none";
+  scoreRow.removeChild(scoreID);
+  scoreRow.style.justifyContent = "center";
+  timerID.style.fontSize = "36px";
+  timerID.textContent = "TIME IS UP!";
+  questionDiv.children[0].textContent = "";
 }
 
 // FUNCTION TO SHOW QUESTION AND CREATE li TAGS TO SHOW MULTIPLE CHOICES
@@ -65,7 +80,7 @@ function displayQuestion() {
   // console.log(content.children[0]);
   // console.log(questionsList[0].question);
   buttonRow.style.display = "none";
-  contentDiv.children[0].textContent = `Question ${questionNumber + 1}: ${questionsList[questionNumber].question}`;
+  questionDiv.children[0].textContent = `Question ${questionNumber + 1}: ${questionsList[questionNumber].question}`;
 
   for (let j = 0; j < questionsList[questionNumber].choices.length; j++) {
     // create a list element for each choice available
@@ -81,10 +96,9 @@ function displayQuestion() {
 // FUNCTION TO SELECT FROM LIST OF MULTIPLE CHOICES
 function userSelection() {
   multipleChoiceUL.addEventListener("click", function (event) {
-    
     // stopImmediatePropagation prevents the Eventlistner from firing multiple times on a single click.
     event.stopImmediatePropagation();
-    
+
     let userChoice = event.target.id;
     console.log(userChoice);
     if (userChoice == questionsList[questionNumber].answer) {
@@ -106,10 +120,7 @@ function userSelection() {
 function displayUserScore() {
   scoreRow.style.display = "none";
   buttonRow.style.display = "none";
-  let h2Tag = document.createElement("h2");
-  let pTag = contentDiv.children[0];
-  contentDiv.replaceChild(h2Tag, pTag);
-  contentDiv.firstChild.textContent = `You scored ${userScore} points`;
+  questionDiv.children[0].textContent = `You scored ${userScore} points`;
 }
 
 // FUNCTION TO ADD TO userScore
