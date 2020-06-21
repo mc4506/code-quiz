@@ -1,9 +1,10 @@
+// Global variables
 var startBtn = document.getElementById("start-btn");
 var saveScoreBtn = document.getElementById("save-score");
 
 var scoreRow = document.querySelector(".score-row");
 
-var quizTimeLimit = 60;
+var quizTimeLimit = 5;
 var timerID = document.getElementById("timer");
 
 var scoreID = document.getElementById("score");
@@ -15,7 +16,7 @@ var questionDiv = document.getElementById("question-content");
 var multipleChoiceUL = document.getElementById("multiple-choices");
 
 var formContainer = document.getElementById("form-content");
-var userNameInput = document.getElementById("user-name");
+var userNameInput = document.getElementById("user-name-input");
 
 var tableContainer = document.getElementById("table-content");
 var table = document.querySelector("tbody");
@@ -60,7 +61,9 @@ function stopCountdown() {
 
 // FUNCTION TO SHOW QUESTION AND CREATE li TAGS TO SHOW MULTIPLE CHOICES
 function displayQuestion() {
-  questionDiv.children[0].textContent = `Question ${questionNumber + 1}: ${questionsList[questionNumber].question}`;
+  questionDiv.children[0].textContent = "$_";
+  questionDiv.children[1].textContent = `QUESTION ${questionNumber + 1}: ${questionsList[questionNumber].question}`;
+  questionDiv.children[1].style.color = "#00bfff";
 
   for (let j = 0; j < questionsList[questionNumber].choices.length; j++) {
     // create a list element for each choice available
@@ -78,6 +81,7 @@ function displayNextQuestion() {
   questionNumber++;
   clearList(); // remove li nodes from previous question
   if (questionNumber < questionsList.length) {
+    multipleChoiceUL.style.pointerEvents = "auto"; // enable clicks when next question is displayed
     displayQuestion();
   } else { 
     stopCountdown(); // if all the questions have been answered, stop countdown and display score
@@ -87,7 +91,7 @@ function displayNextQuestion() {
 
 // FUNCTION TO SELECT FROM LIST OF MULTIPLE CHOICES
 function selectAnswer(event) {
-  var userAnswer = event.target.id; // get the id of the li tag the user clicks on
+  let userAnswer = event.target.id; // get the id of the li tag the user clicks on
 
   // if user's answer is correct, change selection to neon green, add 10 points to score. After 1.5s display the next question
   if (userAnswer == questionsList[questionNumber].answer) { 
@@ -96,15 +100,16 @@ function selectAnswer(event) {
     addScore();
     answeredCorrectly += 1;
     setTimeout(displayNextQuestion, 1500);
-    // multipleChoiceUL.removeEventListener("click", selectAnswer);
-
+    // prevent additional clicks after answer has been selected
+    multipleChoiceUL.style.pointerEvents = "none"; 
   // if user's answer is incorrect, change selection to red, subtract 5 seconds from time. After 1.5s display the next question
   } else {
     multipleChoiceUL.children[userAnswer].textContent += " INCORRECT";
     multipleChoiceUL.children[userAnswer].style.color = "red";
     substractTime();
     setTimeout(displayNextQuestion, 1500);
-    // multipleChoiceUL.removeEventListener("click", selectAnswer);
+    // prevent additional clicks after answer has been selected
+    multipleChoiceUL.style.pointerEvents = "none";
   }
 }
 
@@ -136,11 +141,13 @@ function displayUserScore() {
 function saveScore(event) {
   event.preventDefault();
   let userName = userNameInput.value;
-  // console.log(userName);
-  let user = { name: userName, score: userScore };
-  users = JSON.parse(localStorage.getItem("users")); // get the stored array first so we can add the current entry to the end
-  users.push(user);
-  // console.log(users);
+  if (userName === "") {
+    userName = "anonymous";
+  }
+
+  let user = { name: userName, score: userScore };  
+  users = users.concat(JSON.parse(localStorage.getItem("users"))); // get the stored array first
+  users.push(user); // add latest entry to the users array
   localStorage.setItem("users", JSON.stringify(users)); // store the new users array that includes all the entries
   sortHighScores();
   displayHighScore();
@@ -177,7 +184,6 @@ function displayHighScore() {
       let tdElement = document.createElement("td");
       trElement.appendChild(tdElement);
     }
-
     trElement.children[0].textContent = users[i].name;
     trElement.children[1].textContent = users[i].score;
   }
@@ -206,3 +212,11 @@ function clearList() {
 startBtn.addEventListener("click", startQuiz);
 multipleChoiceUL.addEventListener("click", selectAnswer);
 saveScoreBtn.addEventListener("click", saveScore);
+
+// if Enter (return) key is pressed down in the form, it triggers the Save Score button
+userNameInput.addEventListener("keydown", function (event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    saveScoreBtn.click();
+  }
+});

@@ -2,11 +2,13 @@ body {
   background-color: #2b333b;
   color: #fff;
   font-family: "DM Mono", monospace;
+  font-size: 16px;
 }
 
 h1 {
   font-size: 28px;
   text-decoration: underline;
+  margin-top: 24px;
   margin-left: 16px;
   margin-bottom: 24px;
 }
@@ -19,14 +21,11 @@ h3 {
   font-size: 18px;
 }
 
-p {
-  font-size: 16px;
-  margin: 24px 16px;
-}
-
 li {
   font-size: 16px;
-  margin: 16px;
+  margin-left: 19.2px;
+  margin-bottom: 16px;
+  margin-top: 16px;
 }
 
 li:hover {
@@ -35,33 +34,34 @@ li:hover {
   color: darkorange;
 }
 
+.float-left {
+  float: left;
+  height: 40px;
+}
+
 .wrapper {
   display: flex;
   width: 100%; /* full width for small screens < 576px. See media query for medium and large screens*/
-  flex-direction: column;
+  flex-flow: column wrap;
   align-items: flex-start;
 }
 
 .score-row {
   display: none; /* use javascript to change to display flex when start button is pressed */
-  width: 100%;
   justify-content: space-between;
-}
-
-#score {
+  width: 80%;
   margin-left: 16px;
-  margin-bottom: 24px;
-}
-
-#timer {
-  margin-right: 16px;
   margin-bottom: 24px;
 }
 
 .content {
+  display: flex;
+  flex-direction: row;
   text-align: left;
-  margin-left: 16px;
-  margin-right: 16px;
+  margin-left: 32px;
+  margin-right: 32px;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
 #table-content {
@@ -89,11 +89,11 @@ li:hover {
 
 table {
   width: 50%;
+  table-layout: fixed;
 }
 
 #high-score,
 #name {
-  font-size: 16px;
   text-decoration: underline;
   padding-bottom: 10px;
   padding-top: 10px;
@@ -105,7 +105,8 @@ table {
   margin-left: 16px;
 }
 
-#user-name {
+#user-name-input {
+  font-size: 18px;
   background-color: transparent;
   color: #fff;
   border: none;
@@ -113,7 +114,7 @@ table {
   margin-left: 16px;
 }
 
-#user-name:focus {
+#user-name-input:focus {
   outline: none;
 }
 
@@ -125,6 +126,7 @@ table {
   border: 2px solid white;
   padding: 8px;
   margin-left: 16px;
+  margin-right: 16px;
   border-radius: 15%/50%;
 }
 
@@ -147,14 +149,20 @@ table {
   /* center wrapper on medium screens */
   h1 {
     font-size: 36px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0px;
+  }
+
+  .score-row,
+  .your-score,
+  .label-text {
+    margin-left: 0px;
   }
 
   #high-score,
-#name {
-  font-size: 20px;
-}
+  #name {
+    font-size: 20px;
+  }
+
   .wrapper {
     margin-left: auto;
     width: 75%;
@@ -163,12 +171,13 @@ table {
   }
 
   #table-content,
-  #form-content,
-  .content {
+  #form-content {
     text-align: center;
+    margin-left: 0px;
   }
 
   table {
+    font-size: 16px;
     margin-left: auto;
     margin-right: auto;
   }
