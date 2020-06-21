@@ -147,7 +147,7 @@ function saveScore(event) {
 
   let user = { name: userName, score: userScore };
 
-  if (JSON.parse(localStorage.getItem("users")) === null) {
+  if (localStorage.getItem("users") === null) {
    // if localStorage is empty, setItem first
     users.push(user);
     localStorage.setItem("users", JSON.stringify(users));
