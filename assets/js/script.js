@@ -83,7 +83,7 @@ function displayNextQuestion() {
   if (questionNumber < questionsList.length) {
     multipleChoiceUL.style.pointerEvents = "auto"; // enable clicks when next question is displayed
     displayQuestion();
-  } else { 
+  } else {
     stopCountdown(); // if all the questions have been answered, stop countdown and display score
     displayUserScore();
   }
@@ -94,15 +94,15 @@ function selectAnswer(event) {
   let userAnswer = event.target.id; // get the id of the li tag the user clicks on
 
   // if user's answer is correct, change selection to neon green, add 10 points to score. After 1.5s display the next question
-  if (userAnswer == questionsList[questionNumber].answer) { 
+  if (userAnswer == questionsList[questionNumber].answer) {
     multipleChoiceUL.children[userAnswer].textContent += " CORRECT!";
     multipleChoiceUL.children[userAnswer].style.color = "#39ff14";
     addScore();
     answeredCorrectly += 1;
     setTimeout(displayNextQuestion, 1500);
     // prevent additional clicks after answer has been selected
-    multipleChoiceUL.style.pointerEvents = "none"; 
-  // if user's answer is incorrect, change selection to red, subtract 5 seconds from time. After 1.5s display the next question
+    multipleChoiceUL.style.pointerEvents = "none";
+    // if user's answer is incorrect, change selection to red, subtract 5 seconds from time. After 1.5s display the next question
   } else {
     multipleChoiceUL.children[userAnswer].textContent += " INCORRECT";
     multipleChoiceUL.children[userAnswer].style.color = "red";
@@ -145,10 +145,19 @@ function saveScore(event) {
     userName = "anonymous";
   }
 
-  let user = { name: userName, score: userScore };  
-  users = users.concat(JSON.parse(localStorage.getItem("users"))); // get the stored array first
-  users.push(user); // add latest entry to the users array
-  localStorage.setItem("users", JSON.stringify(users)); // store the new users array that includes all the entries
+  let user = { name: userName, score: userScore };
+
+  if (JSON.parse(localStorage.getItem("users")) === null) {
+   // if localStorage is empty, setItem first
+    users.push(user);
+    localStorage.setItem("users", JSON.stringify(users));
+  } else {
+    // if localStorage is not empty, getItem first
+    users = JSON.parse(localStorage.getItem("users"));
+    users.push(user);
+    localStorage.setItem("users", JSON.stringify(users));
+  }
+  
   sortHighScores();
   displayHighScore();
 }
@@ -165,22 +174,22 @@ function sortHighScores() {
     return comparison;
   }
   users.sort(compare);
-   //console.log(users);
+  //console.log(users);
 }
 
 // FUNCTION TO DISPLAY HIGH SCORES
 function displayHighScore() {
   formContainer.style.display = "none";
   saveScoreBtn.style.display = "none";
-  tableContainer.style.display = "block"; 
+  tableContainer.style.display = "block";
 
   // create table row for each user in users array
-  for (let i = 0; i < users.length; i++){ 
+  for (let i = 0; i < users.length; i++) {
     let trElement = document.createElement("tr");
     table.appendChild(trElement);
-    
+
     // create 2 table cells per table row
-    for (let j = 0; j < 2; j++){
+    for (let j = 0; j < 2; j++) {
       let tdElement = document.createElement("td");
       trElement.appendChild(tdElement);
     }
@@ -191,7 +200,7 @@ function displayHighScore() {
 
 // FUNCTION TO ADD 10 points TO userScore
 function addScore() {
-  userScore += 10; 
+  userScore += 10;
   console.log(userScore);
   scoreID.textContent = "Score: " + userScore;
 }
