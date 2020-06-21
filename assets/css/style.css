@@ -5,29 +5,28 @@ body {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 28px;
   text-decoration: underline;
-  margin-bottom: 1rem;
+  margin-left: 16px;
+  margin-bottom: 24px;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 h3 {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 p {
   font-size: 16px;
-  margin-bottom: 2rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
+  margin: 24px 16px;
 }
 
 li {
   font-size: 16px;
-  margin: 1rem;
+  margin: 16px;
 }
 
 li:hover {
@@ -40,52 +39,81 @@ li:hover {
   display: flex;
   width: 100%; /* full width for small screens < 576px. See media query for medium and large screens*/
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.score-row,
-.button-row {
+.score-row {
   display: none; /* use javascript to change to display flex when start button is pressed */
   width: 100%;
   justify-content: space-between;
 }
 
-.button-row {
-  justify-content: flex-end;
-}
-
 #score {
-  padding-left: 1rem;
-  padding-bottom: 1rem;
+  margin-left: 16px;
+  margin-bottom: 24px;
 }
 
 #timer {
-  padding-right: 1rem;
-  padding-bottom: 1rem;
+  margin-right: 16px;
+  margin-bottom: 24px;
 }
 
-.content,
-#form-content {
-  text-align: center;
+.content {
+  text-align: left;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+#table-content {
+  text-align: left;
 }
 
 #form-content {
   display: none;
-  flex-flow: column wrap;
+  margin-left: 16px;
+  margin-bottom: 24px;
 }
 
 #question-content {
   text-align: left;
+  margin-left: 16px;
+  margin-right: 16px;
+  width: 100%;
 }
 
-#userName {
+#table-content {
+  width: 100%;
+  display: none;
+  margin: 24px 16px;
+}
+
+table {
+  width: 50%;
+}
+
+#high-score,
+#name {
+  font-size: 16px;
+  text-decoration: underline;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.your-score,
+.label-text {
+  margin-bottom: 24px;
+  margin-left: 16px;
+}
+
+#user-name {
   background-color: transparent;
   color: #fff;
   border: none;
   border-bottom: 2px solid white;
+  margin-left: 16px;
 }
 
-#userName:focus {
+#user-name:focus {
   outline: none;
 }
 
@@ -93,9 +121,10 @@ li:hover {
 #start-btn {
   background-color: transparent;
   color: #fff;
-  font-size: 24px;
+  font-size: 16px;
   border: 2px solid white;
   padding: 8px;
+  margin-left: 16px;
   border-radius: 15%/50%;
 }
 
@@ -110,34 +139,43 @@ li:hover {
   transform: scale(1);
 }
 
-#next-btn {
-  background-color: transparent;
-  color: #fff;
-  font-size: 20px;
-  border: none;
-  padding: 1rem;
-}
-
-#next-btn:hover {
-  transform: scale(1.1);
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-#next-btn:active {
-  transform: scale(1);
-}
-
 #save-score {
   display: none;
 }
 
 @media (min-width: 768px) {
   /* center wrapper on medium screens */
+  h1 {
+    font-size: 36px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #high-score,
+#name {
+  font-size: 20px;
+}
   .wrapper {
     margin-left: auto;
     width: 75%;
     margin-right: auto;
+    align-items: center;
+  }
+
+  #table-content,
+  #form-content,
+  .content {
+    text-align: center;
+  }
+
+  table {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #save-score,
+  #start-btn {
+    font-size: 24px;
   }
 }
 

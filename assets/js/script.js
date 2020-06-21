@@ -1,16 +1,14 @@
 var startBtn = document.getElementById("start-btn");
-var nextBtn = document.getElementById("next-btn");
 var saveScoreBtn = document.getElementById("save-score");
 
 var scoreRow = document.querySelector(".score-row");
-var buttonRow = document.querySelector(".button-row");
 
-var quizTimeLimit = 15;
+var quizTimeLimit = 60;
 var timerID = document.getElementById("timer");
 
 var scoreID = document.getElementById("score");
 var userScore = 0; // initialize score
-var answeredCorrectly = 0; // initialize number of correctly answered questions
+var answeredCorrectly = 0; // initialize number of correctly answered questions. if answerCorrectly = number of questions, give bonus points.
 
 var contentDiv = document.querySelector(".content");
 var questionDiv = document.getElementById("question-content");
@@ -19,10 +17,13 @@ var multipleChoiceUL = document.getElementById("multiple-choices");
 var formContainer = document.getElementById("form-content");
 var userNameInput = document.getElementById("user-name");
 
+var tableContainer = document.getElementById("table-content");
+var table = document.querySelector("tbody");
+
 var questionNumber = 0;
 var timerIntertval;
 
-var users = [];
+var users = []; // array to store user objects {name: userName, score: userScore}
 
 // FUNCTION TO START QUIZ
 function startQuiz() {
@@ -39,14 +40,14 @@ function countdown() {
     quizTimeLimit -= 1;
     timerID.textContent = "Timer: " + quizTimeLimit + "s";
     if (quizTimeLimit <= 10) {
-      timer.style.color = "red";
+      timer.style.color = "red"; // change countdown to red if less than 10 seconds left
     }
     if (quizTimeLimit <= 0) {
       stopCountdown();
       quizTimeLimit = 0;
       clearList();
       displayTimesUp();
-      setTimeout(displayUserScore, 1000);
+      setTimeout(displayUserScore, 1500);
       return;
     }
   }, 1000);
@@ -59,14 +60,13 @@ function stopCountdown() {
 
 // FUNCTION TO SHOW QUESTION AND CREATE li TAGS TO SHOW MULTIPLE CHOICES
 function displayQuestion() {
-  buttonRow.style.display = "none";
   questionDiv.children[0].textContent = `Question ${questionNumber + 1}: ${questionsList[questionNumber].question}`;
 
   for (let j = 0; j < questionsList[questionNumber].choices.length; j++) {
     // create a list element for each choice available
     let liElement = document.createElement("li");
     multipleChoiceUL.appendChild(liElement);
-    liElement.id = j;
+    liElement.id = j; // set id for each li to index j
 
     let abcd = "ABCD";
     multipleChoiceUL.children[j].textContent = abcd[j] + ": " + questionsList[questionNumber].choices[j];
@@ -74,55 +74,55 @@ function displayQuestion() {
 }
 
 // FUNCTION TO SHOW NEXT QUESTION
-function nextQuestion() {
+function displayNextQuestion() {
   questionNumber++;
-  clearList();
+  clearList(); // remove li nodes from previous question
   if (questionNumber < questionsList.length) {
     displayQuestion();
-  } else {
-    stopCountdown();
+  } else { 
+    stopCountdown(); // if all the questions have been answered, stop countdown and display score
     displayUserScore();
   }
 }
 
 // FUNCTION TO SELECT FROM LIST OF MULTIPLE CHOICES
 function selectAnswer(event) {
-  var userAnswer = event.target.id;
+  var userAnswer = event.target.id; // get the id of the li tag the user clicks on
 
-  console.log(userAnswer);
-  if (userAnswer == questionsList[questionNumber].answer) {
-    multipleChoiceUL.children[userAnswer].textContent += " <== Correct!";
-    multipleChoiceUL.children[userAnswer].style.color = "green";
+  // if user's answer is correct, change selection to neon green, add 10 points to score. After 1.5s display the next question
+  if (userAnswer == questionsList[questionNumber].answer) { 
+    multipleChoiceUL.children[userAnswer].textContent += " CORRECT!";
+    multipleChoiceUL.children[userAnswer].style.color = "#39ff14";
     addScore();
     answeredCorrectly += 1;
-    buttonRow.style.display = "flex";
+    setTimeout(displayNextQuestion, 1500);
     // multipleChoiceUL.removeEventListener("click", selectAnswer);
+
+  // if user's answer is incorrect, change selection to red, subtract 5 seconds from time. After 1.5s display the next question
   } else {
-    multipleChoiceUL.children[userAnswer].textContent += " <== Incorrect";
+    multipleChoiceUL.children[userAnswer].textContent += " INCORRECT";
     multipleChoiceUL.children[userAnswer].style.color = "red";
     substractTime();
-    buttonRow.style.display = "flex";
+    setTimeout(displayNextQuestion, 1500);
     // multipleChoiceUL.removeEventListener("click", selectAnswer);
   }
 }
 
 // FUNCTION TO DISPLAY TIME'S UP
 function displayTimesUp() {
-  buttonRow.style.display = "none";
   scoreRow.removeChild(scoreID);
   scoreRow.style.justifyContent = "center";
   timerID.style.fontSize = "36px";
   timerID.textContent = "TIME IS UP!";
-  questionDiv.children[0].textContent = "";
+  questionDiv.style.display = "none";
 }
 
-// FUNCTION TO DISPLAY userSore, answeredCorrectly, and ASK USER TO ENTER THEIR NAME
+// FUNCTION TO DISPLAY FINAL userScore. If all answers are correct then give 50 bonus points. and ASK USER TO ENTER THEIR NAME
 function displayUserScore() {
   scoreRow.style.display = "none";
-  buttonRow.style.display = "none";
   questionDiv.style.display = "none";
-  formContainer.style.display = "flex";
-  saveScoreBtn.style.display = "flex";
+  formContainer.style.display = "block";
+  saveScoreBtn.style.display = "block";
 
   if (answeredCorrectly === questionsList.length) {
     userScore += 50;
@@ -132,18 +132,21 @@ function displayUserScore() {
   }
 }
 
+// FUNCTION TO SAVE SCORE TO LOCAL STORAGE
 function saveScore(event) {
   event.preventDefault();
   let userName = userNameInput.value;
   // console.log(userName);
   let user = { name: userName, score: userScore };
-  users = JSON.parse(localStorage.getItem("users"));
+  users = JSON.parse(localStorage.getItem("users")); // get the stored array first so we can add the current entry to the end
   users.push(user);
   // console.log(users);
-  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("users", JSON.stringify(users)); // store the new users array that includes all the entries
   sortHighScores();
+  displayHighScore();
 }
 
+// FUNCTION TO SORT THE users ARRAY FROM HIGH TO LOW SCORE
 function sortHighScores() {
   function compare(a, b) {
     let comparison = 0;
@@ -158,32 +161,48 @@ function sortHighScores() {
    //console.log(users);
 }
 
+// FUNCTION TO DISPLAY HIGH SCORES
 function displayHighScore() {
-  
+  formContainer.style.display = "none";
+  saveScoreBtn.style.display = "none";
+  tableContainer.style.display = "block"; 
+
+  // create table row for each user in users array
+  for (let i = 0; i < users.length; i++){ 
+    let trElement = document.createElement("tr");
+    table.appendChild(trElement);
+    
+    // create 2 table cells per table row
+    for (let j = 0; j < 2; j++){
+      let tdElement = document.createElement("td");
+      trElement.appendChild(tdElement);
+    }
+
+    trElement.children[0].textContent = users[i].name;
+    trElement.children[1].textContent = users[i].score;
+  }
 }
 
-
-
-// FUNCTION TO ADD TO userScore
+// FUNCTION TO ADD 10 points TO userScore
 function addScore() {
-  userScore += 10; // add 10 points
+  userScore += 10; 
   console.log(userScore);
   scoreID.textContent = "Score: " + userScore;
 }
 
 // FUNCTION TO SUBTRACT 5 seconds FROM quizTimeLimit
 function substractTime() {
-  quizTimeLimit -= 5; // substract 5 seconds
+  quizTimeLimit -= 5;
 }
 
-// FUNCTION CLEAR LIST
+// FUNCTION CLEAR LIST NODES
 function clearList() {
   while (multipleChoiceUL.firstChild) {
     multipleChoiceUL.removeChild(multipleChoiceUL.firstChild);
   }
 }
 
+// EVENTLISTENERS
 startBtn.addEventListener("click", startQuiz);
 multipleChoiceUL.addEventListener("click", selectAnswer);
-nextBtn.addEventListener("click", nextQuestion);
 saveScoreBtn.addEventListener("click", saveScore);

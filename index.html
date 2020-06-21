@@ -23,7 +23,7 @@
         <p>This is a quiz that will test your knowledge of Front End Development based on the contents you have learned
           thus far in this Bootcamp course. You will answer a series of 10 multiple choice questions within a 60 seconds
           time limit. If you answer incorrectly, you will lose 5 seconds on the clock. If you answer all the questions
-          correctly before time runs out, yoøu will get a bonus score. Compare your score with others at the end of the
+          correctly before time runs out, you will get a bonus score. Compare your score with others at the end of the
           quiz. Good luck!</p>
       </div>
       <div id="question-content">
@@ -32,15 +32,26 @@
         </ul>
       </div>
       <form id="form-content">
-        <h2></h2>
-        <label>Enter your name:</label>
+        <h2 class="your-score"></h2>
+        <label class="label-text">Enter your name:</label>
         <input type="text" id="user-name">
       </form>
-      <div class="button-row">
-        <button type="next" id="next-btn">Next ></button>
-      </div>
       <button type="button" id="start-btn">Start button</button>
       <button type="button" id="save-score">Save Score</button>
+      <div id="table-content">
+        <h2>High Scores</h2>
+        <table>
+          <thead>
+            <tr>
+              <th id="name">Name</th>
+              <th id="high-score">Score</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+
+        </table>
+      </div>
+
 
 
     </main>
