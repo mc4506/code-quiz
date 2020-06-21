@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/quiz.js" defer></script>
+    <script src="assets/js/questions.js" defer></script>
     <script src="assets/js/script.js" defer></script>
   </head>
 
@@ -23,7 +23,7 @@
         <p>This is a quiz that will test your knowledge of Front End Development based on the contents you have learned
           thus far in this Bootcamp course. You will answer a series of 10 multiple choice questions within a 60 seconds
           time limit. If you answer incorrectly, you will lose 5 seconds on the clock. If you answer all the questions
-          correctly before time runs out, you will get a bonus score. Compare your score with others at the end of the
+          correctly before time runs out, yoøu will get a bonus score. Compare your score with others at the end of the
           quiz. Good luck!</p>
       </div>
       <div id="question-content">
@@ -31,48 +31,19 @@
         <ul id="multiple-choices">
         </ul>
       </div>
+      <form id="form-content">
+        <h2></h2>
+        <label>Enter your name:</label>
+        <input type="text" id="user-name">
+      </form>
       <div class="button-row">
         <button type="next" id="next-btn">Next ></button>
       </div>
       <button type="button" id="start-btn">Start button</button>
+      <button type="button" id="save-score">Save Score</button>
 
 
     </main>
-
-    <!--   
-  GIVEN I am taking a code quiz
-  WHEN I click the start button
-  THEN a timer starts and I am presented with a question
-  WHEN I answer a question
-  THEN I am presented with another question
-  WHEN I answer a question incorrectly
-  THEN time is subtracted from the clock
-  WHEN all questions are answered or the timer reaches 0
-  THEN the game is over
-  WHEN the game is over
-  THEN I can save my initials and score -->
-
-    <!-- I want to use monotype font. I want a black background with a terminal look and feel.
-    Use a different color for the question and answer. 
-    When the screen is small, i will show a small countdown clock. When screen is large i will show a larger or different countdown clock. 
-    When the screen is small, i will show CORRECT or INCORRECT below the answres. On large screens i will show it to the right of the qeustions. 
-    I want a welcome screen with a start button
-
-
-    I want to create a questions page Code Questions after start button is clicked by redirecting them using window.location.href.
-    I need to create a list of 15 questions with key value pairs (object) of questions and answers. Randomly select 10 questions from the list. 
-    i need to create a multiple choice selection
-    I need to create an object with username and score.  
-    I need to shown correct or incorrect. Wait 0.5 seconds before transitioning to next question. 
-    Get bonus if all answers are correct.
-    Lose time if answer incorrectly. 
-    Score gets shown to the user. 
-    I need to create a page called Top Scores that shows the top 10 scores with username. If user is in the top 10 their name is highlighted.
-  I want to have a countdown clock that is large with some animation 
-  I want to have 10 questions 
-  I want to give 1 minute to answer the 10 questions. When there's 10 seconds or less the countdown turns red
-  -->
-
 
   </body>
 

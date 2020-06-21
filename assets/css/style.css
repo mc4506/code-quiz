@@ -1,7 +1,7 @@
 body {
   background-color: #2b333b;
   color: #fff;
-  font-family: 'DM Mono', monospace;
+  font-family: "DM Mono", monospace;
 }
 
 h1 {
@@ -37,7 +37,7 @@ li:hover {
 }
 
 .wrapper {
-  display: flex; 
+  display: flex;
   width: 100%; /* full width for small screens < 576px. See media query for medium and large screens*/
   flex-direction: column;
   align-items: center;
@@ -64,15 +64,32 @@ li:hover {
   padding-bottom: 1rem;
 }
 
-.content {
-    text-align: center;
+.content,
+#form-content {
+  text-align: center;
+}
 
+#form-content {
+  display: none;
+  flex-flow: column wrap;
 }
 
 #question-content {
-    text-align: left;
+  text-align: left;
 }
 
+#userName {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  border-bottom: 2px solid white;
+}
+
+#userName:focus {
+  outline: none;
+}
+
+#save-score,
 #start-btn {
   background-color: transparent;
   color: #fff;
@@ -82,13 +99,15 @@ li:hover {
   border-radius: 15%/50%;
 }
 
+#save-score:hover,
 #start-btn:hover {
   transform: scale(1.1);
   cursor: pointer;
 }
 
+#save-score:active,
 #start-btn:active {
-  transform: scale(1) ;
+  transform: scale(1);
 }
 
 #next-btn {
@@ -109,10 +128,13 @@ li:hover {
   transform: scale(1);
 }
 
-@media (min-width: 768px) {
+#save-score {
+  display: none;
+}
 
+@media (min-width: 768px) {
   /* center wrapper on medium screens */
-  .wrapper { 
+  .wrapper {
     margin-left: auto;
     width: 75%;
     margin-right: auto;
@@ -120,13 +142,10 @@ li:hover {
 }
 
 @media (min-width: 1024px) {
-
   /* center wrapper on large screens with wider margins */
-  .wrapper { 
+  .wrapper {
     margin-left: auto;
     width: 60%;
     margin-right: auto;
   }
 }
-
-
