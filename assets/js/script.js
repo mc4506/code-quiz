@@ -4,7 +4,7 @@ var saveScoreBtn = document.getElementById("save-score");
 
 var scoreRow = document.querySelector(".score-row");
 
-var quizTimeLimit = 5;
+var quizTimeLimit = 60;
 var timerID = document.getElementById("timer");
 
 var scoreID = document.getElementById("score");
