@@ -1,8 +1,31 @@
-# code-quiz
+# Code-Quiz ![https://img.shields.io/github/license/mc4506/code-quiz](https://img.shields.io/github/license/mc4506/code-quiz)
 
- https://mc4506.github.io/code-quiz/
+## Description
 
- ## description
+This is a quiz to test basic Front End knowledge.
+You are given 60 seconds to answer 10 questions. 
+Score are saved via localStorage.
 
- This is a list of 10 quiz questions related to css, html, and javascript. 
- See how you do and compare your score to others.
+Deployed Site: <https://mc4506.github.io/code-quiz>
+
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [License](#license)
+
+## Installation
+
+Clone this repo.
+
+## Usage
+
+Goto deployed site. 
+
+## License
+
+Licensed under MIT License.
+
+## Questions
+
+Contact [mc4506](mailto:mike4506@gmail.com)
